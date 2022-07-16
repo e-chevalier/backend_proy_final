@@ -1,0 +1,53 @@
+{
+  "name": "backendproyfinal",
+  "version": "1.0.0",
+  "main": "server.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "autocannon": "^7.8.1",
+    "bcrypt": "^5.0.1",
+    "compression": "^1.7.4",
+    "connect-mongo": "^4.6.0",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.2",
+    "express-session": "^1.17.2",
+    "faker": "^5.5.3",
+    "firebase-admin": "^10.0.2",
+    "fs": "^0.0.1-security",
+    "knex": "^0.95.15",
+    "mongoose": "^6.2.4",
+    "multer": "^1.4.4",
+    "mysql": "^2.18.1",
+    "nodemailer": "^6.7.5",
+    "passport": "^0.5.2",
+    "passport-local": "^1.0.0",
+    "sqlite3": "^5.0.2",
+    "twilio": "^3.77.1",
+    "winston": "^3.7.2",
+    "yargs": "^17.4.0"
+  },
+  "scripts": {
+    "dev": "nodemon server.js",
+    "start": "node server.js",
+    "prof": "node --prof server.js",
+    "test": "node benchmark.js",
+    "start0x": "0x server.js",
+    "inspect": "node --inspect server.js"
+  },
+  "type": "module",
+  "description": "",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "*.json",
+      "*.txt"
+    ],
+    "delay": 2500
+  }
+}

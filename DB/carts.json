@@ -1,0 +1,56 @@
+[
+  {
+    "id": "2",
+    "timestamp": 1644947422490,
+    "products": [
+      {
+        "id": "5",
+        "title": "Frutilla Camarosa",
+        "price": 200,
+        "description": "De origen californiano (EEUU), de frutos grandes y firmes, es la más consumida en Argentina. Se la considera como la variedad de fresón más cultivada en la actualidad.",
+        "thumbnail": "/assets/img/product/5.jpg",
+        "timestamp": 1644947630919,
+        "code": "Frutas",
+        "qty": 2,
+        "stock": 25
+      },
+      {
+        "id": "3",
+        "title": "Pera Blanquilla",
+        "price": 85,
+        "description": "También conocida como Blanca de Aranjuez, esta pera se caracteriza por tener un tamaño mediano, un color verde poco intenso y una piel lisa y brillante. Posee una carne jugosa y una semilla pequeña.",
+        "thumbnail": "/assets/img/product/3.jpg",
+        "timestamp": 1644947630919,
+        "code": "Frutas",
+        "qty": 4,
+        "stock": 66
+      },
+      {
+        "id": "7",
+        "title": "Brócoli",
+        "price": 80,
+        "description": "De color verde profundo e intenso, partiendo de un tallo firme y robusto hasta una particular e inconfundible forma irregular en su copa. El brócoli llega para regalarnos un suave pero distintivo sabor que oscila entre lo amargo y lo dulce.",
+        "thumbnail": "/assets/img/product/7.jpg",
+        "timestamp": 1644947630919,
+        "code": "Verduras",
+        "qty": 5,
+        "stock": 92
+      }
+    ]
+  },
+  {
+    "products": [],
+    "id": 3,
+    "timestamp": 1652741398353
+  },
+  {
+    "products": [],
+    "id": 4,
+    "timestamp": 1652741402682
+  },
+  {
+    "products": [],
+    "id": 5,
+    "timestamp": 1652744114630
+  }
+]
