@@ -23,7 +23,7 @@ const app = express()
 // Middlewares
 app.use(compression())
 app.use(cors({
-    origin: 'https://backendproyfinal.herokuapp.com', // Location of react app were connecting to
+    origin: '*', // Location of react app were connecting to
     credentials: true 
 }))
 
