@@ -23,8 +23,9 @@ const app = express()
 // Middlewares
 app.use(compression())
 app.use(cors({
-    origin: '*' // Location of react app were connecting to
-    //credentials: true 
+    origin: ['http://localhost:3000', 'https://backendproyfinal.herokuapp.com'], // Location of react app were connecting to
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE", 
+    credentials: true 
 }))
 
 app.use(cookieParser('secreto'))
