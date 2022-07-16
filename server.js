@@ -23,8 +23,8 @@ const app = express()
 // Middlewares
 app.use(compression())
 app.use(cors({
-    origin: '*', // Location of react app were connecting to
-    credentials: true 
+    origin: '*' // Location of react app were connecting to
+    //credentials: true 
 }))
 
 app.use(cookieParser('secreto'))
