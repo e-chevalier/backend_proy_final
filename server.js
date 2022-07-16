@@ -23,7 +23,7 @@ const app = express()
 // Middlewares
 app.use(compression())
 app.use(cors({
-    origin: ['http://localhost:3000', 'https://backendproyfinalfront.herokuapp.com/'], // Location of react app were connecting to
+    origin: ['http://localhost:3000', 'https://backendproyfinalfront.herokuapp.com'], // Location of react app were connecting to
     credentials: true 
 }))
 
