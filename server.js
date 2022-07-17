@@ -14,6 +14,9 @@ import { serverPassport } from './utils/passport/passport.js'
 import os from 'os'
 import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
+import { serverSocketsEvents } from './config/socketEvents.js';
+import { setupMaster, setupWorker } from "@socket.io/sticky";
+import { createAdapter, setupPrimary } from "@socket.io/cluster-adapter";
 
 // import twilio_config from './config/twilio.js'
 // import sendMessage from './utils/twilio/twilio.js'
@@ -102,6 +105,8 @@ if (argv.modo.toUpperCase() == 'CLUSTER') {
 
     } else {
 
+        let io = await serverSocketsEvents(httpServer)
+
         const server = httpServer.listen(PORT, (err) => {
             if (err) {
                 logger.error("Error while starting server")
@@ -117,10 +122,18 @@ if (argv.modo.toUpperCase() == 'CLUSTER') {
             }
         })
 
+         // use the cluster adapter
+         io.adapter(createAdapter());
+
+         // setup connection with the primary process
+         setupWorker(io);
+
         server.on('error', error => logger.error(`Error en servidorProcess Pid: ${process.pid}: ${error}`))
     }
 
 } else {
+
+    await serverSocketsEvents(httpServer, argv.container_type)
 
     const server = httpServer.listen(PORT, (err) => {
         if (err) {

@@ -6,11 +6,13 @@ import { logoutApi } from '../components/logout/index.js'
 import { registrationApi } from '../components/registration/index.js'
 import { failureApi } from '../components/failure/index.js'
 import { uploadfileApi } from '../components/uploadfile/index.js'
+import { chatApi } from '../components/chat/index.js'
 
 export const serverRoutes = ( app, passport ) => {
 
     carritoApi(app)
     productosApi(app)
+    chatApi(app)
 
     loginApi(app, passport)
     logoutApi(app)
