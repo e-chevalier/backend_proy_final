@@ -1,5 +1,8 @@
-import { productsContainer, productsMemory } from '../../../daos/index.js'
+import DaoFactory from '../../../daos/DaoFactory.js'
 import logger from '../../../utils/logger/winston_config.js'
+
+const daoFactory = new DaoFactory()
+const { productsContainer, productsMemory } = await daoFactory.init()
 
 class Productos {
 

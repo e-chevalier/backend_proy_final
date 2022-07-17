@@ -1,8 +1,10 @@
-import { productsMemory, cartsContainer, cartsMemory } from '../../../daos/index.js'
+import DaoFactory from '../../../daos/DaoFactory.js'
 import logger from '../../../utils/logger/winston_config.js'
-
 import twilio_config from '../../../config/twilio.js'
 import sendMessage from '../../../utils/twilio/twilio.js'
+
+const daoFactory = new DaoFactory()
+const { productsMemory, cartsContainer, cartsMemory } = await daoFactory.init()
 
 
 class Carrito {
