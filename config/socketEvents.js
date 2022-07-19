@@ -42,7 +42,7 @@ export const serverSocketsEvents = async (httpsServer) => {
                 socket.join(room);
 
                 let messagesOriginal = await messagesContainer.getByEmail(room)
-                let messagesNormalized = normalize({ id: 'messages', messages: messagesOriginal }, messagesSchema)
+                let messagesNormalized = normalize({ id: 'messages', messages: messagesOriginal.reverse() }, messagesSchema)
                 io.to(room).emit('chat', messagesNormalized);
             })()
          });
@@ -56,7 +56,7 @@ export const serverSocketsEvents = async (httpsServer) => {
                 (async () => {
                     await messagesContainer.save(newMessage)
                     let messagesOriginal = await messagesContainer.getByEmail(room)
-                    let messagesNormalized = normalize({ id: 'messages', messages: messagesOriginal }, messagesSchema)
+                    let messagesNormalized = normalize({ id: 'messages', messages: messagesOriginal.reverse() }, messagesSchema)
                     io.to(room).emit('chat', messagesNormalized);
                     logger.info(`msg: ${newMessage}, room: ${room}`)
                 })()
