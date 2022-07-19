@@ -47,19 +47,7 @@ export const serverSocketsEvents = async (httpsServer) => {
             })()
          });
 
-        // socket.on('newMessage', (data) => {
-
-        //     if (Object.keys(data).length !== 0 && re.test(data.author.id) && !Object.values(data.author).includes('') && data.text !== '') {
-        //         (async () => {
-        //             await messagesContainer.save(data)
-        //             let messagesOriginal = await messagesContainer.getAll()
-        //             let messagesNormalized = normalize({ id: 'messages', messages: messagesOriginal }, messagesSchema)
-        //             io.sockets.emit('messages', messagesNormalized)
-        //             logger.info('¡NUEVO MENSAJE EMITIDO A TODOS LOS SOCKETS! PID: ' + process.pid)  // - Pedido 1
-        //         })()
-        //     }
-        // })
-
+       
         socket.on('chat', (data) => {
 
             const { newMessage, room } = data;
