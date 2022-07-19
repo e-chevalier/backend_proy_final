@@ -46,7 +46,7 @@ class ContenedorMongoDB {
      */
     async getById(id) {
         try {
-            let tmp = await this.db.find({ 'id': id }, { '_id': 0, '__v': 0 })
+            let tmp = await this.db.find({ 'id': id }, { '_id': 0, '__v': 0 }).lean()
 
             let res = tmp.length ? tmp[0] : null
             return res

@@ -14,7 +14,7 @@ class MessagesDaoMongoDB extends ContenedorMongoDB {
      */
      async getByEmail(email) {
         try {
-            let res = await this.db.find({ 'author.id': email }, { '_id': 0, '__v': 0 })
+            let res = await this.db.find({ 'author.id': email }, { '_id': 0, '__v': 0 }).lean()
             return res
 
         } catch (error) {

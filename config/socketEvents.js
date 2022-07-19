@@ -35,28 +35,47 @@ export const serverSocketsEvents = async (httpsServer) => {
 
 
     io.on('connection', (socket) => {
-        // Emit all Messages on connection.
+        
+        socket.on('join', (room) => {
+            (async () => {
+                logger.info(`Socket ${socket.id} joining ${room}`);
+                socket.join(room);
 
-        (async () => {
-            let messagesOriginal = await messagesContainer.getAll() 
-            let messagesNormalized = normalize({ id: 'messages', messages: messagesOriginal }, messagesSchema)
-            io.sockets.emit('messages', messagesNormalized)
-            logger.info('¡Nuevo cliente conectado! PID: ' + process.pid)  // - Pedido 1
-        })()
+                let messagesOriginal = await messagesContainer.getByEmail(room)
+                let messagesNormalized = normalize({ id: 'messages', messages: messagesOriginal }, messagesSchema)
+                io.to(room).emit('chat', messagesNormalized);
+            })()
+         });
 
-        socket.on('newMessage', (data) => {
+        // socket.on('newMessage', (data) => {
 
-            if (Object.keys(data).length !== 0 && re.test(data.author.id) && !Object.values(data.author).includes('') && data.text !== '') {
+        //     if (Object.keys(data).length !== 0 && re.test(data.author.id) && !Object.values(data.author).includes('') && data.text !== '') {
+        //         (async () => {
+        //             await messagesContainer.save(data)
+        //             let messagesOriginal = await messagesContainer.getAll()
+        //             let messagesNormalized = normalize({ id: 'messages', messages: messagesOriginal }, messagesSchema)
+        //             io.sockets.emit('messages', messagesNormalized)
+        //             logger.info('¡NUEVO MENSAJE EMITIDO A TODOS LOS SOCKETS! PID: ' + process.pid)  // - Pedido 1
+        //         })()
+        //     }
+        // })
+
+        socket.on('chat', (data) => {
+
+            const { newMessage, room } = data;
+
+            if (Object.keys(newMessage).length !== 0 && re.test(newMessage.author.id) && !Object.values(newMessage.author).includes('') && newMessage.text !== '') {
                 (async () => {
-                    await messagesContainer.save(data)
-                    let messagesOriginal = await messagesContainer.getAll()
+                    await messagesContainer.save(newMessage)
+                    let messagesOriginal = await messagesContainer.getByEmail(room)
                     let messagesNormalized = normalize({ id: 'messages', messages: messagesOriginal }, messagesSchema)
-                    io.sockets.emit('messages', messagesNormalized)
-                    logger.info('¡NUEVO MENSAJE EMITIDO A TODOS LOS SOCKETS! PID: ' + process.pid)  // - Pedido 1
+                    io.to(room).emit('chat', messagesNormalized);
+                    logger.info(`msg: ${newMessage}, room: ${room}`)
                 })()
             }
         })
 
+       
     })
 
     return io
