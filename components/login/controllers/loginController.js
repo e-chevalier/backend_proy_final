@@ -22,9 +22,9 @@ class Login {
 
     async postLogin(req, res, next) {
         try {
-            const { data } = await loginService.postLogin(req)
+            const { data, jwt } = await loginService.postLogin(req)
 
-            res.json({status: 'LOGINOK', data })
+            res.json({status: 'LOGINOK', data, jwt })
             
         } catch (error) {
             logger.error(error);

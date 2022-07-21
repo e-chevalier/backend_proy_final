@@ -1,4 +1,7 @@
 import logger from "../../../utils/logger/winston_config.js"
+import jwt from 'jsonwebtoken'
+
+const PRIVATE_KEY = process.env.PRIVATE_KEY
 
 class Login {
 
@@ -28,8 +31,9 @@ class Login {
     async postLogin(req) {
 
         try {
-            
-            let response = {status: 'OK', data: req.user}
+            const token = jwt.sign({ data: req.user }, PRIVATE_KEY, { expiresIn: '24h' });
+
+            let response = {status: 'OK', data: req.user, jwt: token}
 
             return response
 
