@@ -6,6 +6,7 @@ export const carritoApi = (app) => {
     app.use('/api/carrito', router )
 
     router.post('/', carritoController.postCarrito)
+    router.put('/:id/:email', carritoController.putCarritoOwner)
     router.delete('/:id', carritoController.deleteCarrito)
     router.get('/:id/productos', carritoController.getCarritoProductos)
     router.post('/:id/productos', carritoController.postCarritoProducto )

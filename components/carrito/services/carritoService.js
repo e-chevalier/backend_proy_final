@@ -23,6 +23,21 @@ class Carrito {
         }
     }
 
+    async putCarritoOwner(id_cart, email) {
+        try {
+           await cartsMemory.updateById(id_cart, { email: email })
+           //Save to DAO Container
+           cartsContainer.updateById(id_cart, { email: email })
+           return { status: "OK", description: `PUT OWNER EMAIL: ${email} INTO ID_CART: ${id_cart}` }
+            
+        } catch (error) {
+            logger.error(error)
+        }
+    }
+
+
+    
+
     async deleteCarrito(id) {
         try {
             //logger.info(`DELETE Carrito => id: ${id} -- cartsRouters`)

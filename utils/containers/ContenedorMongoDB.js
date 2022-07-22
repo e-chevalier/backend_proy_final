@@ -99,7 +99,8 @@ class ContenedorMongoDB {
 
     async updateById(id, prod) {
         try {
-            await this.db.findOneAndUpdate({ 'id': id }, prod)
+            // console.log("id: " + id + " prod: " + JSON.stringify(prod))
+            let res = await this.db.findOneAndUpdate({ 'id': id }, prod)
         } catch (error) {
             logger.error(error)
         }

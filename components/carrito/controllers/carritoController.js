@@ -12,6 +12,16 @@ class Carrito {
 
     }
 
+    async putCarritoOwner(req, res, next) {
+        try {
+            let response = await carritoService.putCarritoOwner(req.params.id, req.params.email)
+            res.json(response)
+        } catch (error) {
+            logger.error(error)
+        }
+
+    }
+
     async deleteCarrito(req, res, next) {
         try {
             let response = await carritoService.deleteCarrito(req.params.id)
