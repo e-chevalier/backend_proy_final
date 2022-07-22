@@ -1,10 +1,10 @@
 import DaoFactory from '../../../daos/DaoFactory.js'
+import PurchaseorderDaoMemory from '../../../daos/purchaseorder/PurchaseorderDaoMemory.js'
 import logger from '../../../utils/logger/winston_config.js'
-import twilio_config from '../../../config/twilio.js'
-import sendMessage from '../../../utils/twilio/twilio.js'
+import sendMail from '../../../utils/nodemailer/nodemailer.js'
 
 const daoFactory = new DaoFactory()
-const { productsMemory, cartsContainer, cartsMemory } = await daoFactory.init()
+const { productsMemory, cartsContainer, cartsMemory, purchaseorderContainer } = await daoFactory.init()
 
 
 class Carrito {
@@ -146,24 +146,67 @@ class Carrito {
     async confirmOrder(body) {
         try {
 
-            let { cartId, shoopingList, subTotal, shippingCost, user } = body
-            console.log(body)
+            let { cartId, shoppingList, subTotal, shippingCost, user, total } = body
 
+            let  newPurchaseorder = {
+                email: user.email,
+                products: shoppingList
+            }
 
-            // let cart = await cartsMemory.getById(id)
+            let orderId = await purchaseorderContainer.save(newPurchaseorder);
 
-            // console.log(cart)
+            //console.log(response);
 
-            const toNumberWhatsapp = twilio_config.TONUMBERWHATSAPP
-            const toNumberSMS = twilio_config.TONUMBERSMS
-            let bodyWhatsapp = 'Your appointment is coming up on July 21 at 3PM'
-            let bodySms = 'Su pedido ha sido recibido y se encuentra en preparacion.'
+            let template = `<h3> Buenos días ${user.firstname} ${user.lastname}</h3>
+                <h4> Su detalle de compra: </h4>`
+            template += `
+                <h4> Orden de compra: ${orderId}<h4/>
+                <table border="1">
+                    <tr>
+                        <th>Producto</th>
+                        <th>Precio</th>
+                        <th>Cant</th>
+                        <th>Total</th>
+                    </tr>
+             `;
 
+            shoppingList.forEach(p => template += `
+                    <tr>
+                        <td>${p.title}</td>
+                        <td>$${p.price}</td>
+                        <td>${p.qty}</td>
+                        <td>$${p.subTotal}</td>
+                    </tr>
+            `)
 
-            //sendMessage('sms', toNumberSMS, bodySms)
-            sendMessage('whatsapp', toNumberWhatsapp, bodyWhatsapp)
+            template += `
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>SubTotal</td>
+                    <td>$${subTotal}</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>Envio</td>
+                    <td>$${shippingCost}</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td><strong>Total</strong></td>
+                    <td><strong>$${total}</strong></td>
+                </tr>
 
-            return {status: 'Order confirmed', cartId: cartId}
+            </table>
+
+            <br> <h3> Muchas gracias por tu compra. </h3>
+            `
+
+            sendMail('Orden de Compra', template, user.email)
+            
+            return {status: 'Order confirmed', cartId: cartId, orderid: orderId}
 
         } catch (error) {
             logger.error(error)            

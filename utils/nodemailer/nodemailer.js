@@ -18,18 +18,18 @@ const transporter = createTransport(transport_gmail_config)
 
 
 
-const sendMail = async (subject, message) => {
+const sendMail = async (subject, message, to = TEST_MAIL_GMAIL) => {
     try {
 
         const mailOptions = {
             from: 'Servidor Node.js BackendProyFinal3',
-            to: TEST_MAIL_GMAIL,
+            to: to,
             subject: subject,
             html: message
         }
 
         let info = await transporter.sendMail(mailOptions)
-        logger.info(info)
+        //logger.info(info)
         logger.info(`Send email from: ${transport_config.auth.user} to: ${mailOptions.to}.`)
 
     } catch (error) {

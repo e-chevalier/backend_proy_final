@@ -18,7 +18,6 @@ class Registration {
 
     async postRegistration(req) {
         try {
-            // { "username": "Hulk", "password": "123456", "email": "hulk@gmail.com", "firstname": "Bruce", "lastname": "Banner", "address": "La Florida 22", "phone": "+54935123412", "age": "1954-02-12" }
             let template = `<table border="1"><tr>`;
             Object.keys(req.body).forEach( key => template += `<td>${key[0].toUpperCase() + key.substring(1).toLowerCase()}</td>`);
             template += `</tr><tr>`;
